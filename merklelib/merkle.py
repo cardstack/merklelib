@@ -38,7 +38,6 @@ import collections
 import abc
 import six
 import functools
-import io
 import math
 import time
 
@@ -251,7 +250,7 @@ def verify_leaf_inclusion(target, proof, hashobj, root_hash):
   paths = None
 
   # any collection containing AuditNode objects.
-  if isinstance(proof, collections.Iterable):
+  if isinstance(proof, collections.abc.Iterable):
     if isinstance(proof[0], AuditNode):
       paths = proof
   elif isinstance(proof, AuditProof):
@@ -429,7 +428,7 @@ class MerkleTree(object):
 
   def _build_tree(self, data):
     # convert to a tuple if not iterable already
-    if not isinstance(data, collections.Iterable):
+    if not isinstance(data, collections.abc.Iterable):
       data = (data, )
     self._root = None
     mapping = collections.OrderedDict()
@@ -575,7 +574,7 @@ class MerkleTree(object):
     """
     if isinstance(data, MerkleTree):
       data = data.leaves
-    elif not isinstance(data, collections.Iterable):
+    elif not isinstance(data, collections.abc.Iterable):
       data = (data, data)
     # traverse and append each item
     for item in data:
